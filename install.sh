@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # 安装 Docker
+sudo apt update
 sudo apt-get install docker-ce
 
 # 切换到根目录
 cd /
 
-# 安装 Git
-sudo apt update
-sudo apt install git
+# 安装 docker-compose
+sudo apt install docker-compose
 
 # 克隆 GitHub 仓库
 git clone https://github.com/Yanyutin753/most-simply-deploy-PandoaraNext.git /pandora
