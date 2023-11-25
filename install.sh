@@ -34,7 +34,7 @@ if [ -d "$target_dir" ]; then
 fi
 
 # 克隆 Gitee 仓库到目标目录并切换到主分支
-git clone "$repo_url" "$target_dir" && cd "$target_dir" && git checkout main
+git clone https://github.com/Yanyutin753/most-simply-deploy-PandoaraNext.git /pandora
 
 # 进入 /pandora 目录
 cd /pandora
