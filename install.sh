@@ -1,4 +1,4 @@
-echo "检查是否已经安装 docker-ce"
+echo "检查是否已经安装 docker"
 if ! command -v docker &> /dev/null
 then
     # 安装 Docker
@@ -22,8 +22,7 @@ fi
 # 切换到根目录
 cd /
 
-# 设置仓库地址和目标目录
-repo_url="git clone https://github.com/Yanyutin753/most-simply-deploy-PandoaraNext.git"
+# 设置目标目录
 target_dir="/pandora"
 
 # 检查目标目录是否已经存在
