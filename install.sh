@@ -22,8 +22,15 @@ confirm_delete() {
 echo "检查是否已经安装 docker"
 if ! command -v docker &> /dev/null; then
     # 安装 Docker
-    sudo apt update
-    sudo apt-get install docker-ce
+    if command -v apt &> /dev/null; then
+        sudo apt update
+        sudo apt-get install docker-ce
+    elif command -v yum &> /dev/null; then
+        sudo yum install docker-ce
+    else
+        echo "不支持的包管理器，无法安装 Docker。"
+        exit 1
+    fi
     echo "安装 Docker 成功！"
 else
     echo "Docker 已经安装，跳过安装步骤。"
@@ -32,7 +39,14 @@ fi
 echo "检查是否已经安装 docker-compose"
 if ! command -v docker-compose &> /dev/null; then
     # 安装 docker-compose
-    sudo apt install docker-compose
+    if command -v apt &> /dev/null; then
+        sudo apt install docker-compose
+    elif command -v yum &> /dev/null; then
+        sudo yum install docker-compose
+    else
+        echo "不支持的包管理器，无法安装 Docker Compose。"
+        exit 1
+    fi
     echo "安装 docker-compose 成功！"
 else
     echo "Docker Compose 已经安装，跳过安装步骤。"
