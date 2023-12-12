@@ -47,10 +47,17 @@ if ! command -v docker-compose &> /dev/null; then
         echo "不支持的包管理器，无法安装 Docker Compose。"
         exit 1
     fi
-    echo "安装 docker-compose 成功！"
+    # 检查安装是否成功
+    if command -v docker-compose &> /dev/null; then
+        echo "安装 Docker Compose 成功！"
+    else
+        echo "安装 Docker Compose 失败，请检查安装过程。"
+        exit 1
+    fi
 else
     echo "Docker Compose 已经安装，跳过安装步骤。"
 fi
+
 
 # 设置目标目录
 target_dir="/pandora"
@@ -68,5 +75,9 @@ echo "进入 /pandora 目录"
 cd /pandora
 
 # 运行 Docker Compose 启动命令
-docker-compose up -d
-echo "启动成功，请确保开启 8081 端口和 8181 端口"
+if docker-compose up -d; then
+    echo "Docker Compose 启动成功，请确保开启 8081 端口和 8181 端口"
+else
+    echo "Docker Compose 启动失败！请确保正确安装docker和docker compose
+fi
+
