@@ -78,6 +78,6 @@ cd /pandora
 if docker-compose up -d; then
     echo "Docker Compose 启动成功，请确保开启 8081 端口和 8181 端口"
 else
-    echo "Docker Compose 启动失败！请确保正确安装docker和docker compose
+    echo "Docker Compose 启动失败！请确保正确安装docker和docker compose"
 fi
 
