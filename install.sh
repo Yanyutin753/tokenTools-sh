@@ -74,9 +74,28 @@ echo "克隆成功"
 echo "进入 /pandora 目录"
 cd /pandora
 
+while true; do
+    # 提示用户输入新的端口号
+    read -p "请输入tokensTool的端口号（默认为8081）: " new_port
+
+    # 如果用户没有输入，使用默认端口号8081
+    new_port=${new_port:-8082}
+
+    # 检验端口号是否为一个数字，并且是否在1到65535的范围内
+    if [[ "$new_port" =~ ^[0-9]+$ ]] && ((new_port >= 1)) && ((new_port <= 65535)); then
+        # 输入合法，退出循环
+        break
+    else
+        echo "错误：端口号无效，请输入一个有效的端口号（1到65535之间）。"
+    fi
+done
+
+# 替换docker-compose.yml文件中的端口号
+sed -i "s/- --server.port=[0-9]*/- --server.port=${new_port}/" docker-compose.yml
+
 # 运行 Docker Compose 启动命令
 if docker-compose up -d; then
-    echo "Docker Compose 启动成功，请确保开启 8081 端口和 8181 端口"
+    echo "Docker Compose 启动成功，请确保开启 ${new_port} 端口和 8181 端口"
 else
     echo "Docker Compose 启动失败！请确保正确安装docker和docker compose"
 fi
