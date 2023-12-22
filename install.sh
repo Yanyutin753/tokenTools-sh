@@ -18,7 +18,23 @@ confirm_delete() {
         exit 1
     fi
 }
-
+echo "检查是否已经安装 bash"
+if ! command -v bash &> /dev/null; then
+    # 安装 bash
+    if command -v apt &> /dev/null; then
+        sudo apt update
+        sudo apt-get install bash
+    elif command -v yum &> /dev/null; then
+        sudo yum update
+        sudo yum install bash
+    else
+        echo "不支持的包管理器，无法安装 bash。"
+        exit 1
+    fi
+    echo "安装 bash 成功！"
+else
+    echo "bash 已经安装，跳过安装步骤。"
+fi
 echo "检查是否已经安装 docker"
 if ! command -v docker &> /dev/null; then
     # 安装 Docker
@@ -41,8 +57,10 @@ echo "检查是否已经安装 docker-compose"
 if ! command -v docker-compose &> /dev/null; then
     # 安装 docker-compose
     if command -v apt &> /dev/null; then
+        sudo apt update
         sudo apt install docker-compose
     elif command -v yum &> /dev/null; then
+        sudo yum update
         sudo yum install docker-compose
     else
         echo "不支持的包管理器，无法安装 Docker Compose。"
