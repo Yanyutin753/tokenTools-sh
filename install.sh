@@ -26,6 +26,7 @@ if ! command -v docker &> /dev/null; then
         sudo apt update
         sudo apt-get install docker-ce
     elif command -v yum &> /dev/null; then
+        sudo yum update
         sudo yum install docker-ce
     else
         echo "不支持的包管理器，无法安装 Docker。"
