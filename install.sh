@@ -80,7 +80,7 @@ while true; do
     read -p "请输入tokensTool的端口号（默认为8081）: " new_port
 
     # 如果用户没有输入，使用默认端口号8081
-    new_port=${new_port:-8082}
+    new_port=${new_port:-8081}
 
     # 检验端口号是否为一个数字，并且是否在1到65535的范围内
     if [[ "$new_port" =~ ^[0-9]+$ ]] && ((new_port >= 1)) && ((new_port <= 65535)); then
