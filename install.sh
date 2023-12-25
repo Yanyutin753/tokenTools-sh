@@ -4,7 +4,7 @@
 confirm_delete() {
     echo "目标目录已存在，是否删除并拉取最新代码？(y/n)"
     read confirm
-    if [ "$confirm" == "y" ]; then
+    if [ "$confirm" = "y" ]; then  # 修改了这一行
         # 检查是否有足够的权限
         if [ ! -w /pandora ]; then
             echo "没有足够的权限删除目录，请检查权限设置。"
@@ -13,11 +13,15 @@ confirm_delete() {
 
         # 删除目录的操作
         cd / && rm -rf /pandora
+
+        # 重新创建目录
+        mkdir /pandora
     else
         echo "取消操作，退出脚本。"
         exit 1
     fi
 }
+
 echo "检查是否已经安装 bash"
 if ! command -v bash &> /dev/null; then
     # 安装 bash
@@ -101,11 +105,11 @@ while true; do
     new_port=${new_port:-8081}
 
     # 检验端口号是否为一个数字，并且是否在1到65535的范围内
-    if [[ "$new_port" =~ ^[0-9]+$ ]] && ((new_port >= 1)) && ((new_port <= 65535)); then
-        # 输入合法，退出循环
-        break
+    if [ "$new_port" -ge 1 ] && [ "$new_port" -le 65535 ] && [ "$new_port" -eq "$new_port" ] 2>/dev/null; then
+    # 输入合法，退出循环
+      break
     else
-        echo "错误：端口号无效，请输入一个有效的端口号（1到65535之间）。"
+      echo "错误：端口号无效，请输入一个有效的端口号（1到65535之间）。"
     fi
 done
 
@@ -118,4 +122,5 @@ if docker-compose up -d; then
 else
     echo "Docker Compose 启动失败！请确保正确安装docker和docker compose"
 fi
+
 
