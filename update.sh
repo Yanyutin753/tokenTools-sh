@@ -35,14 +35,15 @@ if [ -d "/pandora" ]; then
         # 检查这个镜像是否正在运行
         if ! grep -q "$image_id" <<<"$running_images"; then
             # 如果这个镜像没有正在运行，那么删除它
-            docker rmi "$image_id" &
-
+            docker rmi "$image_id"
+            
             # 如果删除镜像的命令失败，那么设置 all_images_removed 为 false
             if [ $? -ne 0 ]; then
                 all_images_removed=false
             fi
         fi
     done <<<"$images"
+
 
     # 等待所有的后台任务都完成
     wait
