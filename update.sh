@@ -50,9 +50,9 @@ if [ -d "/pandora" ]; then
 
     # 如果所有的镜像都被成功删除，那么输出 "所有镜像删除成功"
     if $all_images_removed; then
-        echo "所有镜像删除成功。"
+        echo "旧镜像删除成功。"
     else
-        echo "有些镜像没有被成功删除。"
+        echo "旧镜像没有被成功删除。"
     fi
 else
     echo "没有 /pandora 路径，请先一键部署之后才能一键更新。"
