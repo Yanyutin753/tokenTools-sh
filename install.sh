@@ -81,7 +81,6 @@ else
     echo "Docker Compose 已经安装，跳过安装步骤。"
 fi
 
-
 # 设置目标目录
 target_dir="/pandora"
 
@@ -90,8 +89,8 @@ if [ -d "$target_dir" ]; then
     confirm_delete
 fi
 
-echo "克隆 github 仓库到目标目录并切换到主分支"
-git clone https://github.com/Yanyutin753/most-simply-deploy-PandoaraNext.git /pandora
+echo "克隆 gitee 仓库到目标目录并切换到主分支"
+git clone https://gitee.com/yangyangEN/most-simply-deploy-PandoaraNext.git /pandora
 echo "克隆成功"
 
 echo "进入 /pandora 目录"
@@ -113,14 +112,49 @@ while true; do
     fi
 done
 
-# 替换docker-compose.yml文件中的端口号
-sed -i "s/- --server.port=[0-9]*/- --server.port=${new_port}/" docker-compose.yml
+
+while true; do
+    # 提示用户是否需要自定义后缀
+    read -p "是否需要自定义后缀? (y/n) " need_suffix
+    if [ "$need_suffix" = "y" ]; then
+        while true; do
+            # 提示用户输入新的后缀
+            printf "请输入新的后缀（例如：/tokensTool）: "
+            read new_suffix
+    
+            # 如果用户没有输入，使用默认后缀 '/'
+            new_suffix=${new_suffix:-/}
+    
+            # 检查新的后缀是否以 '/' 开始
+            case "$new_suffix" in
+                /*) 
+                    # 后缀以 '/' 开始，退出内部循环
+                    break
+                    ;;
+                *) 
+                    # 后缀不以 '/' 开始，提示用户重新输入
+                    printf "错误：后缀应以 '/' 开始，请重新输入。\n"
+                    ;;
+            esac
+        done
+        # 后缀已经被替换，退出外部循环
+        break
+    elif [ "$need_suffix" = "n" ]; then
+        break
+    else
+        printf "错误：无效的输入，请输入 'y' 或 'n'.\n"
+    fi
+done
+
+# 替换docker-compose.yml文件中的后缀和端口号
+sed -i -e "s|--server.servlet.context-path=/|--server.servlet.context-path=${new_suffix}|" -e "s|--server.port=[0-9]\+|--server.port=${new_port}|" docker-compose.yml
 
 # 运行 Docker Compose 启动命令
 if docker-compose up -d; then
     echo "Docker Compose 启动成功，请确保开启 ${new_port} 端口和 8181 端口"
+    echo "tokensTool启动网址：http://127.0.0.1:${new_port}${new_suffix}"
+    echo "初始值userName : root"
+    echo "初始值Password : 123456"
 else
     echo "Docker Compose 启动失败！请确保正确安装docker和docker compose"
 fi
-
-
