@@ -140,6 +140,7 @@ while true; do
         # 后缀已经被替换，退出外部循环
         break
     elif [ "$need_suffix" = "n" ]; then
+        new_suffix=/
         break
     else
         printf "错误：无效的输入，请输入 'y' 或 'n'.\n"
