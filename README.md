@@ -16,10 +16,10 @@ sudo apt install git
 sudo yum update
 sudo yum install git
 
-# 国内
+# 国内服务器
 cd / && git clone https://gitee.com/yangyangEN/tokenTools-sh.git
 
-# 国外
+# 国外服务器
 cd / && git clone https://github.com/Yanyutin753/tokenTools-sh.git
 
 # 运行脚本
