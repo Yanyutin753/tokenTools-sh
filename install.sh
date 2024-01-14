@@ -89,8 +89,8 @@ if [ -d "$target_dir" ]; then
     confirm_delete
 fi
 
-echo "克隆 gitee 仓库到目标目录并切换到主分支"
-git clone https://gitee.com/yangyangEN/most-simply-deploy-PandoaraNext.git /pandora
+echo "克隆 github仓库到目标目录并切换到主分支"
+git clone https://github.com/Yanyutin753/most-simply-deploy-PandoaraNext.git /pandora
 echo "克隆成功"
 
 echo "进入 /pandora 目录"
